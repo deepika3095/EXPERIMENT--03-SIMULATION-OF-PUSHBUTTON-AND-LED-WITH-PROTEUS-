@@ -75,6 +75,9 @@ We are now at the last part of step by step guide on how to simulate STM32 proje
 NAME: DEEPIKA R
 REG: 212223230038
 
+NAME: DEEPIKA R
+REG: 212223230038
+
 #include "main.h"
 #include <stdbool.h>
 
@@ -98,14 +101,14 @@ int main(void)
 
 void push_button()
 {
-  button_status = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5);
+  button_status = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0);   // PA0 INPUT
   if (button_status == 0)
   {
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);  // PA5 OUTPUT
   }
   else
   {
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
   }
 }
 
@@ -145,14 +148,16 @@ static void MX_GPIO_Init(void)
 
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);   // PA5 output reset
 
-  GPIO_InitStruct.Pin = GPIO_PIN_5;
+  // PA0 → Button Input
+  GPIO_InitStruct.Pin = GPIO_PIN_0;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  GPIO_InitStruct.Pin = GPIO_PIN_11;
+  // PA5 → LED Output
+  GPIO_InitStruct.Pin = GPIO_PIN_5;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -172,6 +177,7 @@ void assert_failed(uint8_t *file, uint32_t line)
 {
 }
 #endif
+
 ```
 ## Output screen shots of proteus  :
 <img width="789" height="617" alt="image" src="https://github.com/user-attachments/assets/3b45efe2-8d55-4371-bc1f-f4178dcc4c25" />
